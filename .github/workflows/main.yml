@@ -47,16 +47,20 @@ jobs:
       - name: Build trustcache Dependency
         run: |
           set -x
-          # Install OpenSSL dependency to get sha.h headers
-          brew install openssl@3
-          
           git clone https://github.com/CRKatri/trustcache
           cd trustcache
           
-          # Inject Homebrew OpenSSL header paths into compiler flags
-          export CFLAGS="$CFLAGS -I$(brew --prefix openssl@3)/include"
-          export LDFLAGS="$LDFLAGS -L$(brew --prefix openssl@3)/lib"
+          # 1. Map out the exact OpenSSL include path
+          OPENSSL_PREFIX=$(brew --prefix openssl@3)
           
+          # 2. Fix missing flat header by symlinking sha.h into the root directory
+          ln -s "${OPENSSL_PREFIX}/include/openssl/sha.h" ./sha.h
+          
+          # 3. Export global path variables that 'cc' respects automatically
+          export C_INCLUDE_PATH="${OPENSSL_PREFIX}/include:$(pwd)"
+          export LIBRARY_PATH="${OPENSSL_PREFIX}/lib"
+          
+          # 4. Compile cleanly
           make -j$(sysctl -n hw.logicalcpu)
           sudo cp trustcache /usr/local/bin/
 
