@@ -1,9 +1,5 @@
-//
-//  DOJailbreaker+iOS27.h
-//  Dopamine
-//
-//  iOS 27 jailbreak functionality extension
-//
+// Add this exact line to the top of DOJailbreaker+iOS27.h
+#import "DOJailbreaker.h"
 
 #ifndef DOJailbreaker_iOS27_h
 #define DOJailbreaker_iOS27_h
