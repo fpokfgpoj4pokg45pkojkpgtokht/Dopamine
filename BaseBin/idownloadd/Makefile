@@ -6,7 +6,7 @@ CONFIGURATION = Release
 OUTPUT_NAME = idownloadd
 
 build:
-	xcodebuild -project $(XCODE_PROJECT) -scheme $(XCODE_SCHEME) -configuration $(CONFIGURATION) -destination generic/platform=iOS build $(CS_FLAGS) CONFIGURATION_BUILD_DIR=$(PWD)
+	xcodebuild -project $(XCODE_PROJECT) -scheme $(XCODE_SCHEME) -configuration $(CONFIGURATION) -destination generic/platform=iOS build $(CS_FLAGS) CONFIGURATION_BUILD_DIR="$(shell pwd)"
 	@ldid -Cadhoc -Sentitlements.plist $(OUTPUT_NAME)
 
 clean:
