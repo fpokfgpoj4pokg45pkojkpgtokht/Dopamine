@@ -65,7 +65,7 @@ jbctl: .build .include libjailbreak
 
 idownloadd: .build .include libjailbreak
 	$(MAKE) -C idownloadd
-	@cp idownloadd/Build/Intermediates.noindex/ArchiveIntermediates/idownloadd/InstallationBuildProductsLocation/usr/local/bin/idownloadd .build/idownloadd
+	@cp idownloadd/idownloadd .build
 
 watchdoghook: .build .include libjailbreak
 	$(MAKE) -C watchdoghook
