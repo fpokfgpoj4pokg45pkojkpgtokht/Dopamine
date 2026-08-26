@@ -47,9 +47,16 @@ jobs:
       - name: Build trustcache Dependency
         run: |
           set -x
+          # Install OpenSSL dependency to get sha.h headers
+          brew install openssl@3
+          
           git clone https://github.com/CRKatri/trustcache
           cd trustcache
-          # Compile trustcache for the macOS runner host environment
+          
+          # Inject Homebrew OpenSSL header paths into compiler flags
+          export CFLAGS="$CFLAGS -I$(brew --prefix openssl@3)/include"
+          export LDFLAGS="$LDFLAGS -L$(brew --prefix openssl@3)/lib"
+          
           make -j$(sysctl -n hw.logicalcpu)
           sudo cp trustcache /usr/local/bin/
 
