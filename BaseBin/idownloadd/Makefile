@@ -6,13 +6,12 @@ CONFIGURATION = Release
 OUTPUT_NAME = idownloadd
 
 build:
-	xcodebuild -project $(XCODE_PROJECT) -scheme $(XCODE_SCHEME) -configuration $(CONFIGURATION) -destination generic/platform=iOS build $(CS_FLAGS) SYMROOT=$(PWD)/DerivedData
-	@cp -f $(PWD)/DerivedData/$(CONFIGURATION)-iphoneos/$(OUTPUT_NAME) ./$(OUTPUT_NAME)
-	@rm -rf $(PWD)/DerivedData
+	xcodebuild -project $(XCODE_PROJECT) -scheme $(XCODE_SCHEME) -configuration $(CONFIGURATION) -destination generic/platform=iOS build $(CS_FLAGS) CONFIGURATION_BUILD_DIR=$(PWD)
 	@ldid -Cadhoc -Sentitlements.plist $(OUTPUT_NAME)
 
 clean:
 	xcodebuild -project $(XCODE_PROJECT) -scheme $(XCODE_SCHEME) -configuration $(CONFIGURATION) -destination generic/platform=iOS clean
-	@rm -rf $(OUTPUT_NAME) $(PWD)/DerivedData
+	@rm -rf $(OUTPUT_NAME)
 
 default: build
+
